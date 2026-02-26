@@ -1,3 +1,4 @@
+
 # Developing a Neural Network Classification Model
 
 ## AIM
@@ -14,68 +15,91 @@ You are required to help the manager to predict the right group of the new custo
 
 ## Neural Network Model
 
-Include the neural network model diagram.
+<img width="832" height="834" alt="image" src="https://github.com/user-attachments/assets/eb33c3b3-69b8-437a-82b4-e892642f907b" />
 
 ## DESIGN STEPS
 
 ### STEP 1:
-Write your own steps
-
+Collect customer data from the existing market and identify the features that influence customer segmentation. Define the target variable as the customer segment (A, B, C, or D).
 ### STEP 2:
-
+Remove irrelevant attributes, handle missing values, and encode categorical variables into numerical form. Split the dataset into training and testing sets.
 ### STEP 3:
+Design a neural network classification model with suitable input, hidden, and output layers. Train the model using the training data to learn patterns for customer segmentation.
+### STEP 4: Model Evaluation and Prediction
+Evaluate the trained model using test data and use it to predict the customer segment for new customers in the target market.
 
 
 ## PROGRAM
 
-### Name: 
-### Register Number:
+### Name: RANJIT R
+### Register Number: 212224240131
 
 ```python
 class PeopleClassifier(nn.Module):
     def __init__(self, input_size):
         super(PeopleClassifier, self).__init__()
-        #Include your code here
-
+        self.fc1=nn.Linear(input_size,16)
+        self.fc2=nn.Linear(16,8)
+        self.fc3=nn.Linear(8,4)
 
 
     def forward(self, x):
-        #Include your code here
-        
+      x=F.relu(self.fc1(x))
+      x=F.relu(self.fc2(x))
+      x=self.fc3(x)
+      return x
+       
 
 ```
 ```python
 # Initialize the Model, Loss Function, and Optimizer
-
+model =PeopleClassifier(input_size=X_train.shape[1])
+criterion =nn.CrossEntropyLoss()
+optimizer =optim.Adam(model.parameters(), lr=0.01)
 
 ```
 ```python
 def train_model(model, train_loader, criterion, optimizer, epochs):
-    #Include your code here
+   for epoch in range(epochs):
+    model.train()
+    for X_batch, y_batch in train_loader:
+      optimizer.zero_grad()
+      outputs = model(X_batch)
+      loss = criterion(outputs, y_batch)
+      loss.backward ()
+      optimizer.step()
+
+    if (epoch + 1) % 10 == 0:
+        print(f'Epoch [{epoch+1}/{epochs}], Loss: {loss.item():.4f}')
 ```
 
 
 
 ## Dataset Information
 
-Include screenshot of the dataset
+<img width="1411" height="317" alt="image" src="https://github.com/user-attachments/assets/10cbcc3f-bb5d-4a99-8ae9-a27899572768" />
+
+
 
 ## OUTPUT
-
-
-
 ### Confusion Matrix
 
-Include confusion matrix here
+
+<img width="951" height="578" alt="image" src="https://github.com/user-attachments/assets/5a7e06c0-9775-481a-a732-f49bb41b366a" />
+
+
 
 ### Classification Report
-
-Include Classification Report here
+<img width="1727" height="590" alt="image" src="https://github.com/user-attachments/assets/4d036277-2c10-403e-9dca-40b27d7670bc" />
 
 
 ### New Sample Data Prediction
 
-Include your sample input and output here
+
+
+<img width="1063" height="157" alt="image" src="https://github.com/user-attachments/assets/ada50446-891a-4f88-a875-045dd70b4f4a" />
+
 
 ## RESULT
-Include your result here
+
+Thus neural network classification model is developded for the given dataset. 
